@@ -1,4 +1,7 @@
 function file_selector#OpenFileSelector()
+    " 呼び出し元のウィンドウ ID を記憶
+    let s:caller_window_id = win_getid()
+
     " 検索文字初期化
     let s:pattern = ""
 
@@ -62,6 +65,15 @@ function file_selector#DelChar()
 endfunction
 
 function file_selector#OpenBuffer()
-    normal gf
+    """ カーソル上のファイルパスを取得
+    let target_file = getline(".")
+
+    """ 呼び出し元ウィンドウをアクティブにする
+    call win_gotoid(s:caller_window_id)
+
+    """ ファイルを開く
+    execute ":e " . target_file
+
+    """ 絞り込み用バッファ削除
     bwipeout! __FILE_SELECTOR_FILE_LIST__
 endfunction
