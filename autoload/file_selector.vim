@@ -5,6 +5,33 @@ function file_selector#OpenFileSelector()
     " バッファ作成
     silent bo new __FILE_SELECTOR_FILE_LIST__
 
+    " カーソル設定保存
+    redir => cursor_highlight_line
+    silent highlight Cursor
+    redir END
+    let s:cursor_highlight = get(split(cursor_highlight_line, "xxx "), 1)
+    let s:cursorcolumn=&cursorcolumn
+    let s:cursorline=&cursorline
+    let s:guicursor=&guicursor
+
+    " カーソル復元用 autocmd
+    augroup file_selector
+        autocmd!
+        autocmd BufLeave <buffer> execute "highlight Cursor " . s:cursor_highlight
+        autocmd BufLeave <buffer> execute "set guicursor=" . s:guicursor
+        autocmd BufLeave <buffer> let &cursorcolumn = s:cursorcolumn
+        autocmd BufLeave <buffer> let &cursorline = s:cursorline
+    augroup END
+
+    " カーソル設定
+    highlight Cursor gui=NONE guifg=NONE guibg=NONE guisp=NONE
+    set guicursor=i:iCursor
+    set nocursorcolumn
+    set cursorline
+
+    " カーソルを消す
+    set filetype=file_selector
+
     """ キーマッピング
     " バッファ閉じる
     silent inoremap <buffer> q <Esc>:bwipeout!<Return>
