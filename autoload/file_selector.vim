@@ -5,6 +5,15 @@ function file_selector#OpenFileSelector()
     " バッファ作成
     silent bo new __FILE_SELECTOR_FILE_LIST__
 
+    """ 絞り込み用バッファの設定
+    setlocal noshowcmd
+    setlocal noswapfile
+    setlocal buftype=nofile
+    setlocal bufhidden=delete
+    setlocal nobuflisted
+    setlocal nowrap
+    setlocal nonumber
+
     " カーソル設定保存
     redir => cursor_highlight_line
     silent highlight Cursor
