@@ -43,14 +43,14 @@ function file_selector#OpenFileSelector()
 
     """ キーマッピング
     " バッファ閉じる
-    silent inoremap <buffer> q <Esc>:bwipeout!<Return>
-    silent noremap <buffer> q <Esc>:bwipeout!<Return>
+    silent inoremap <silent> <buffer> q <Esc>:bwipeout!<Return>
+    silent noremap <silent> <buffer> q <Esc>:bwipeout!<Return>
 
     " バッファ開く
-    silent inoremap <buffer> <C-l> <Esc>:call file_selector#OpenBuffer()<Return>
+    silent inoremap <silent> <buffer> <C-l> <Esc>:call file_selector#OpenBuffer()<Return>
 
     " パターン文字削除
-    silent inoremap <buffer> <BS> <Esc>:call file_selector#DelChar()<Return>
+    silent inoremap <silent> <buffer> <BS> <Esc>:call file_selector#DelChar()<Return>
 
     " 移動
     silent inoremap <buffer> <C-p> <Up>
