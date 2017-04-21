@@ -1,3 +1,5 @@
+let g:file_selector_exclude_pattern = get(g:, 'file_selector_exclude_pattern', '')
+
 function file_selector#OpenFileSelector()
     " 呼び出し元のウィンドウ ID を記憶
     let s:caller_window_id = win_getid()
@@ -92,6 +94,13 @@ function file_selector#UpdateBuffer()
 
     silent % delete _
     call setline(1, s:all_file_list)
+
+    " exclude_pattern の除外
+    if (g:file_selector_exclude_pattern != "")
+        silent execute "g/" . g:file_selector_exclude_pattern . "/d"
+    endif
+
+    " pattern の抽出
     if (pattern != "")
         silent execute "v/" . pattern . "/d"
     endif
