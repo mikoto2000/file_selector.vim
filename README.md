@@ -13,7 +13,7 @@ Usage:
 
 
 必要に応じて `g:file_selector_exclude_pattern` の設定を行ってください。
-`g:file_selector_exclude_pattern` で指定したパターンが含まれる行は一覧から除外されます。
+`g:file_selector_exclude_pattern` で指定したパターンが含まれる行は、ファイル一覧から除外されます。
 
 文字を入力すると、ファイル絞り込み用バッファのファイル一覧が絞り込まれていきます。
 
