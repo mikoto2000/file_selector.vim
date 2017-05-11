@@ -16,6 +16,7 @@ Usage:
 `g:file_selector_exclude_pattern` で指定したパターンが含まれる行は、ファイル一覧から除外されます。
 
 文字を入力すると、ファイル絞り込み用バッファのファイル一覧が絞り込まれていきます。
+半角スペースで区切られた文字列の AND で絞り込まれます。
 
 ある程度絞り込まれたら、 ``<C-n>``, ``<C-p>`` でカーソルを上下に動かし、 ``<C-l>`` を押すことでカーソル上のファイルを開きます。
 
@@ -26,6 +27,10 @@ let g:file_selector_exclude_pattern = '\(bin\|build\|gradle\|config\)'
 noremap <Leader>f <Esc>:call file_selector#OpenFileSelector()<Enter>
 ```
 
+Limitation:
+-----------
+
+半角スペースを含むファイル名は、うまく検索できないとおもいます。
 
 License:
 --------

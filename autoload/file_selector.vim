@@ -5,7 +5,7 @@ function file_selector#OpenFileSelector()
     let s:caller_window_id = win_getid()
 
     " 検索文字初期化
-    let s:pattern = ""
+    let s:patterns = ""
 
     " バッファ作成
     silent bo new __FILE_SELECTOR_FILE_LIST__
@@ -91,21 +91,24 @@ function file_selector#UpdateBuffer()
     endif
 
     " pattern の抽出
-    if (s:pattern != "")
-        silent execute "v/" . s:pattern . "/d"
+    if (s:patterns != "")
+        " 半角スペースで区切り、 AND で絞り込む
+        for pattern in split(s:patterns, ' ')
+            silent execute "v/" . pattern . "/d"
+        endfor
     endif
     normal gg
-    echo "pattern > " . s:pattern
+    echo "pattern > " . s:patterns
 endfunction
 
 """ 何かを入力しようとしたら、必ずプロンプトの末尾に文字が追加されるようにする
 function file_selector#AddChar()
-    let s:pattern = s:pattern . v:char
+    let s:patterns = s:patterns . v:char
 endfunction
 
 """ プロンプト末尾の文字を削除
 function file_selector#DelChar()
-    let s:pattern = s:pattern[0:-2]
+    let s:patterns = s:patterns[0:-2]
     call file_selector#UpdateBuffer()
     startinsert
 endfunction
