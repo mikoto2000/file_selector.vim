@@ -64,8 +64,8 @@ function file_selector#OpenFileSelector()
     " 絞り込み用バッファ初期化
     silent % delete _
 
-    " findgrep の結果を取得
-    let s:all_file_list = glob("**/*", 1, 1)
+    " ファイルリスト取得
+    let s:all_file_list = file_selector#TreeWalk('.')
 
     """ 検索モード設定
     " インサートモードにしたうえで、入力無効にする
@@ -81,14 +81,28 @@ function file_selector#OpenFileSelector()
     startinsert
 endfunction
 
+function! file_selector#TreeWalk(dir)
+    let l:tmp = []
+
+    for f in readdirex(a:dir)
+        " exclude_pattern の除外
+        if (match(a:dir . '/' . f['name'], g:file_selector_exclude_pattern) >= 0)
+            continue
+        endif
+
+        if f['type'] == 'dir'
+            let l:tmp += file_selector#TreeWalk(a:dir . '/' . f['name'])
+         else
+            call add(l:tmp, a:dir . '/' . f['name'])
+         endif
+    endfor
+
+    return l:tmp
+endfunction
+
 function file_selector#UpdateBuffer()
     silent % delete _
     call setline(1, s:all_file_list)
-
-    " exclude_pattern の除外
-    if (g:file_selector_exclude_pattern != "")
-        silent execute "g/" . g:file_selector_exclude_pattern . "/d"
-    endif
 
     " pattern の抽出
     if (s:patterns != "")
