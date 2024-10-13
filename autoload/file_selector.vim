@@ -86,7 +86,7 @@ function! file_selector#TreeWalk(dir)
 
     for f in readdirex(a:dir)
         " exclude_pattern の除外
-        if (match(a:dir . '/' . f['name'], g:file_selector_exclude_pattern) >= 0)
+        if (match(f['name'], g:file_selector_exclude_pattern) >= 0)
             continue
         endif
 
