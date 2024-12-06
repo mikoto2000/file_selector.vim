@@ -48,8 +48,7 @@ function file_selector#OpenFileSelector()
 
     """ キーマッピング
     " バッファ閉じる
-    silent inoremap <silent> <buffer> q <Esc>:bwipeout!<Return>
-    silent noremap <silent> <buffer> q <Esc>:bwipeout!<Return>
+    silent inoremap <silent> <buffer> <Esc> <Esc>:bwipeout!<Return>
 
     " バッファ開く
     silent inoremap <silent> <buffer> <C-l> <Esc>:call file_selector#OpenBuffer()<Return>
