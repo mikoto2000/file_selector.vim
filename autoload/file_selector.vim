@@ -1,6 +1,9 @@
 let g:file_selector_exclude_pattern = get(g:, 'file_selector_exclude_pattern', '')
 
 function file_selector#OpenFileSelector()
+    """ 現在のウィンドウの位置を保存
+    let s:restore_window_pos_cmd = winrestcmd()
+
     " 呼び出し元のウィンドウ ID を記憶
     let s:caller_window_id = win_getid()
 
@@ -138,4 +141,9 @@ function file_selector#OpenBuffer()
 
     """ 絞り込み用バッファ削除
     bwipeout! __FILE_SELECTOR_FILE_LIST__
+
+    """ ウィンドウの位置を復元
+    execute s:restore_window_pos_cmd
+
+
 endfunction
