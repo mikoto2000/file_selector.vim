@@ -23,19 +23,12 @@ function file_selector#OpenFileSelector()
     setlocal nonumber
 
     " カーソル設定保存
-    redir => cursor_highlight_line
-    silent highlight Cursor
-    redir END
-    let s:cursor_highlight = get(split(cursor_highlight_line, "xxx "), 1)
     let s:cursorcolumn=&cursorcolumn
     let s:cursorline=&cursorline
-    let s:guicursor=&guicursor
 
     " カーソル復元用 autocmd
     augroup file_selector
         autocmd!
-        autocmd BufLeave <buffer> execute "highlight Cursor " . s:cursor_highlight
-        autocmd BufLeave <buffer> execute "set guicursor=" . s:guicursor
         autocmd BufLeave <buffer> let &cursorcolumn = s:cursorcolumn
         autocmd BufLeave <buffer> let &cursorline = s:cursorline
     augroup END
